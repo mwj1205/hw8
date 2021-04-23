@@ -124,12 +124,12 @@ int initialize(listNode** h) {
 /* 메모리 해제 */
 int freeList(listNode* h){
 	if(h == NULL) return 0;
-	listNode* fnode = h->rlink;
-	while(fnode != h){
+	listNode* fnode = h->rlink; // 해제할 노드 가리킬 포인터
+	while(fnode != h){ // 리스트 돌면서 해제
 		fnode = fnode->rlink;
 		free(fnode->llink);
 	}
-	free(h);
+	free(h); // headnode 해제
 	return 0;
 }
 
@@ -242,7 +242,7 @@ int deleteFirst(listNode* h) {
 		printf("headnode is not initialized!\n");
 		return 0;
 	}
-		if(h == h->rlink){
+	if(h == h->rlink){
 		printf("circular linked list is empty.\n");
 		return 0;
 	}
@@ -264,7 +264,18 @@ int invertList(listNode* h) {
 		printf("headnode is not initialized!\n");
 		return 0;
 	}
-
+	if(h == h->rlink){
+		printf("circular linked list is empty.\n");
+		return 0;
+	}
+	listNode* curr = h->rlink;
+	listNode* prev = h;
+	do{
+		curr->llink = curr->rlink;
+		curr->rlink = prev;
+		prev = curr;
+		curr = curr->llink;
+	}while(prev != h);
 	return 0;
 }
 
@@ -302,6 +313,28 @@ int deleteNode(listNode* h, int key) {
 		printf("headnode is not initialized!\n");
 		return 0;
 	}
+	if(h == h->rlink){
+		printf("circular linked list is empty.\n");
+		return 0;
+	}
+	if(h->key == key){
+		printf("deletion of headnode is not permitted.\n");
+		return 0;
+	}
+
+	listNode* delnode = h->rlink;
+	while(delnode != h && delnode->key != key){ // 입력받은 key 탐색
+		delnode = delnode->rlink;
+	}
+	if(delnode == h){ // 입력받은 key를 가진 노드가 존재하지 않으면
+		printf("fail to find the key.\n");
+	}
+	else if (delnode->key == key){// 입력받은 key를 가진 노드를 찾으면
+		delnode->llink->rlink = delnode->rlink;
+		delnode->rlink->llink = delnode->llink;
+		free(delnode);
+	}
+	else printf("unknown error \n");
 	return 0;
 }
 
