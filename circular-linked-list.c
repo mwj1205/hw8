@@ -254,6 +254,18 @@ int insertNode(listNode* h, int key) {
 		printf("headnode is not initialized!\n");
 		return 0;
 	}
+	listNode* findkey = h->rlink; // key 검색할 포인터
+	listNode* newnode = (listNode*)malloc(sizeof(listNode));
+	newnode->key = key;
+	while(findkey != h && findkey->key < key){ // 입력받은 key보다 큰 key를 가진 노드 탐색
+		findkey = findkey->rlink;
+	}
+	/* 검색한 노드 앞에 newnode 삽입 */
+	newnode->rlink = findkey;
+	newnode->llink = findkey->llink;
+	findkey->llink->rlink = newnode;
+	findkey->llink = newnode;
+
 	return 0;
 }
 
