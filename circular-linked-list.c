@@ -123,7 +123,13 @@ int initialize(listNode** h) {
 
 /* 메모리 해제 */
 int freeList(listNode* h){
-
+	if(h == NULL) return 0;
+	listNode* fnode = h->rlink;
+	while(fnode != h){
+		fnode = fnode->rlink;
+		free(fnode->llink);
+	}
+	free(h);
 	return 0;
 }
 
