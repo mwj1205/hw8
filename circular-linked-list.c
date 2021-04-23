@@ -195,12 +195,21 @@ int insertLast(listNode* h, int key) {
 /**
  * list의 마지막 노드 삭제
  */
+// headnode의 왼쪽 노드 삭제
 int deleteLast(listNode* h) {
 	if(h == NULL){ // check initial state
 		printf("headnode is not initialized!\n");
 		return 0;
 	}
-
+	if(h == h->llink){
+		printf("circular linked list is empty.\n");
+		return 0;
+	}
+	listNode* delnode = h->llink; // 삭제 대상 노드
+	/* 삭제 대상 노드와 연결된 링크들을 옮김 */
+	delnode->llink->rlink = delnode->rlink;
+	delnode->rlink->llink = delnode->llink;
+	free(delnode);
 	return 1;
 }
 
@@ -227,12 +236,21 @@ int insertFirst(listNode* h, int key) {
 /**
  * list의 첫번째 노드 삭제
  */
+// headnode의 오른쪽 노드 삭제
 int deleteFirst(listNode* h) {
 	if(h == NULL){ // check initial state
 		printf("headnode is not initialized!\n");
 		return 0;
 	}
-
+		if(h == h->rlink){
+		printf("circular linked list is empty.\n");
+		return 0;
+	}
+	listNode* delnode = h->rlink; // 삭제 대상 노드
+	/* 삭제 대상 노드와 연결된 링크들을 옮김 */
+	delnode->llink->rlink = delnode->rlink;
+	delnode->rlink->llink = delnode->llink;
+	free(delnode);
 	return 1;
 
 }
