@@ -172,6 +172,10 @@ void printList(listNode* h) {
  */
 // headnode의 왼쪽에 노드 추가
 int insertLast(listNode* h, int key) {
+	if(h == NULL){ // check initial state
+		printf("headnode is not initialized!\n");
+		return 0;
+	}
 	listNode* newnode = (listNode*)malloc(sizeof(listNode));
 	newnode->key = key;
 	newnode->rlink = h; // newnode의 rlink를 head에 연결
@@ -186,7 +190,10 @@ int insertLast(listNode* h, int key) {
  * list의 마지막 노드 삭제
  */
 int deleteLast(listNode* h) {
-
+	if(h == NULL){ // check initial state
+		printf("headnode is not initialized!\n");
+		return 0;
+	}
 
 	return 1;
 }
@@ -197,6 +204,10 @@ int deleteLast(listNode* h) {
  */
 // headnode의 오른쪽에 노드 추가
 int insertFirst(listNode* h, int key) {
+	if(h == NULL){ // check initial state
+		printf("headnode is not initialized!\n");
+		return 0;
+	}
 	listNode* newnode = (listNode*)malloc(sizeof(listNode));
 	newnode->key = key;
 	newnode->llink = h; // newnode의 llink를 head에 연결
@@ -211,7 +222,10 @@ int insertFirst(listNode* h, int key) {
  * list의 첫번째 노드 삭제
  */
 int deleteFirst(listNode* h) {
-
+	if(h == NULL){ // check initial state
+		printf("headnode is not initialized!\n");
+		return 0;
+	}
 
 	return 1;
 
@@ -222,7 +236,10 @@ int deleteFirst(listNode* h) {
  * 리스트의 링크를 역순으로 재 배치
  */
 int invertList(listNode* h) {
-
+	if(h == NULL){ // check initial state
+		printf("headnode is not initialized!\n");
+		return 0;
+	}
 
 	return 0;
 }
@@ -233,7 +250,10 @@ int invertList(listNode* h) {
  *  리스트를 검색하여, 입력받은 key보다 큰값이 나오는 노드 바로 앞에 삽입 
  **/
 int insertNode(listNode* h, int key) {
-
+	if(h == NULL){ // check initial state
+		printf("headnode is not initialized!\n");
+		return 0;
+	}
 	return 0;
 }
 
@@ -242,7 +262,10 @@ int insertNode(listNode* h, int key) {
  * list에서 key에 대한 노드 삭제
  */
 int deleteNode(listNode* h, int key) {
-
+	if(h == NULL){ // check initial state
+		printf("headnode is not initialized!\n");
+		return 0;
+	}
 	return 0;
 }
 
