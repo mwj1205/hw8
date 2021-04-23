@@ -12,7 +12,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-/* í•„ìš”í•œ í—¤ë”íŒŒì¼ ì¶”ê°€ */
+/* ÇÊ¿äÇÑ Çì´õÆÄÀÏ Ãß°¡ */
 
 typedef struct Node {
 	int key;
@@ -20,7 +20,7 @@ typedef struct Node {
 	struct Node* rlink;
 } listNode;
 
-/* í•¨ìˆ˜ ë¦¬ìŠ¤íŠ¸ */
+/* ÇÔ¼ö ¸®½ºÆ® */
 int initialize(listNode** h);
 int freeList(listNode* h);
 int insertLast(listNode* h, int key);
@@ -42,6 +42,7 @@ int main()
 	int key;
 	listNode* headnode=NULL;
 
+	printf("[----- [ÇÑ¹Î¿ì] [2018038047] -----]\n");	
 	do{
 		printf("----------------------------------------------------------------\n");
 		printf("                  Doubly Circular Linked List                   \n");
@@ -108,11 +109,11 @@ int main()
 
 int initialize(listNode** h) {
 
-	/* headNodeê°€ NULLì´ ì•„ë‹ˆë©´, freeNodeë¥¼ í˜¸ì¶œí•˜ì—¬ í• ë‹¹ëœ ë©”ëª¨ë¦¬ ëª¨ë‘ í•´ì œ */
+	/* headNode°¡ NULLÀÌ ¾Æ´Ï¸é, freeNode¸¦ È£ÃâÇÏ¿© ÇÒ´çµÈ ¸Ş¸ğ¸® ¸ğµÎ ÇØÁ¦ */
 	if(*h != NULL)
 		freeList(*h);
 
-	/* headNodeì— ëŒ€í•œ ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹í•˜ì—¬ ë¦¬í„´ */
+	/* headNode¿¡ ´ëÇÑ ¸Ş¸ğ¸®¸¦ ÇÒ´çÇÏ¿© ¸®ÅÏ */
 	*h = (listNode*)malloc(sizeof(listNode));
 	(*h)->rlink = *h;
 	(*h)->llink = *h;
@@ -120,7 +121,7 @@ int initialize(listNode** h) {
 	return 1;
 }
 
-/* ë©”ëª¨ë¦¬ í•´ì œ */
+/* ¸Ş¸ğ¸® ÇØÁ¦ */
 int freeList(listNode* h){
 
 	return 0;
@@ -167,16 +168,22 @@ void printList(listNode* h) {
 
 
 /**
- * listì— keyì— ëŒ€í•œ ë…¸ë“œí•˜ë‚˜ë¥¼ ì¶”ê°€
+ * list¿¡ key¿¡ ´ëÇÑ ³ëµåÇÏ³ª¸¦ Ãß°¡
  */
+// headnodeÀÇ ¿ŞÂÊ¿¡ ³ëµå Ãß°¡
 int insertLast(listNode* h, int key) {
-
+	listNode* newnode = (listNode*)malloc(sizeof(listNode));
+	newnode->key = key;
+	newnode->rlink = h; // newnodeÀÇ rlink¸¦ head¿¡ ¿¬°á
+	newnode->llink = h->llink; // newnodeÀÇ llink¸¦ ±âÁ¸¿¡ ¸¶Áö¸· ³ëµå¿¡ ¿¬°á
+	h->llink->rlink = newnode; // ±âÁ¸¿¡ ¸¶Áö¸· ³ëµåÀÇ rlink¸¦ newnode·Î ¿¬°á
+	h->llink = newnode; // ³ëµåÀÇ ¸Ç ¸¶Áö¸·(headnode ÀÇ llink)À» newnode·Î ¿¬°á
 	return 1;
 }
 
 
 /**
- * listì˜ ë§ˆì§€ë§‰ ë…¸ë“œ ì‚­ì œ
+ * listÀÇ ¸¶Áö¸· ³ëµå »èÁ¦
  */
 int deleteLast(listNode* h) {
 
@@ -186,16 +193,22 @@ int deleteLast(listNode* h) {
 
 
 /**
- * list ì²˜ìŒì— keyì— ëŒ€í•œ ë…¸ë“œí•˜ë‚˜ë¥¼ ì¶”ê°€
+ * list Ã³À½¿¡ key¿¡ ´ëÇÑ ³ëµåÇÏ³ª¸¦ Ãß°¡
  */
+// headnodeÀÇ ¿À¸¥ÂÊ¿¡ ³ëµå Ãß°¡
 int insertFirst(listNode* h, int key) {
-
+	listNode* newnode = (listNode*)malloc(sizeof(listNode));
+	newnode->key = key;
+	newnode->llink = h; // newnodeÀÇ llink¸¦ head¿¡ ¿¬°á
+	newnode->rlink = h->rlink; // newnodeÀÇ rlink¸¦ ±âÁ¸¿¡ ¸Ç Ã³À½ ³ëµå¿¡ ¿¬°á
+	h->rlink->llink = newnode; // ±âÁ¸¿¡ ¸Ç Ã³À½ ³ëµåÀÇ llink¸¦ newnode·Î ¿¬°á
+	h->rlink = newnode; // ³ëµåÀÇ ¸Ç Ã³À½(headnodeÀÇ rlink)À» newnode·Î ¿¬°á
 
 	return 1;
 }
 
 /**
- * listì˜ ì²«ë²ˆì§¸ ë…¸ë“œ ì‚­ì œ
+ * listÀÇ Ã¹¹øÂ° ³ëµå »èÁ¦
  */
 int deleteFirst(listNode* h) {
 
@@ -206,7 +219,7 @@ int deleteFirst(listNode* h) {
 
 
 /**
- * ë¦¬ìŠ¤íŠ¸ì˜ ë§í¬ë¥¼ ì—­ìˆœìœ¼ë¡œ ì¬ ë°°ì¹˜
+ * ¸®½ºÆ®ÀÇ ¸µÅ©¸¦ ¿ª¼øÀ¸·Î Àç ¹èÄ¡
  */
 int invertList(listNode* h) {
 
@@ -217,7 +230,7 @@ int invertList(listNode* h) {
 
 
 /**
- *  ë¦¬ìŠ¤íŠ¸ë¥¼ ê²€ìƒ‰í•˜ì—¬, ì…ë ¥ë°›ì€ keyë³´ë‹¤ í°ê°’ì´ ë‚˜ì˜¤ëŠ” ë…¸ë“œ ë°”ë¡œ ì•ì— ì‚½ì… 
+ *  ¸®½ºÆ®¸¦ °Ë»öÇÏ¿©, ÀÔ·Â¹ŞÀº keyº¸´Ù Å«°ªÀÌ ³ª¿À´Â ³ëµå ¹Ù·Î ¾Õ¿¡ »ğÀÔ 
  **/
 int insertNode(listNode* h, int key) {
 
@@ -226,7 +239,7 @@ int insertNode(listNode* h, int key) {
 
 
 /**
- * listì—ì„œ keyì— ëŒ€í•œ ë…¸ë“œ ì‚­ì œ
+ * list¿¡¼­ key¿¡ ´ëÇÑ ³ëµå »èÁ¦
  */
 int deleteNode(listNode* h, int key) {
 
